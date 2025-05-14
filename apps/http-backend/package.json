@@ -14,7 +14,7 @@
   "dependencies": {
     "@repo/backend-common": "workspace:*",
     "@repo/common": "workspace:*",
-    "@repo/prisma": "workspace:*",
+    "@repo/db": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",

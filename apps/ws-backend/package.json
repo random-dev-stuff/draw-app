@@ -16,6 +16,7 @@
     "ws": "^8.18.2"
   },
   "devDependencies": {
+    "@repo/db": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@repo/backend-common": "workspace:*",
     "@types/jsonwebtoken": "^9.0.9",

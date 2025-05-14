@@ -1,6 +1,5 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { prismaClient } from "@repo/prisma/client";
 import {
   SignUpSchema,
   SignInSchema,
@@ -9,6 +8,7 @@ import {
 import { JWT_SECRET } from "@repo/backend-common/config";
 import { authMiddleware } from "./middleware/auth";
 import bcrypt from "bcrypt";
+import { prismaClient } from "@repo/db/client";
 
 const app = express();
 app.use(express.json());
@@ -25,13 +25,13 @@ app.post("/api/v1/signup", async (req, res) => {
       return;
     }
 
-    const hashedPass = bcrypt.hash(data.password, 10);
+    const hashedPass = await bcrypt.hash(data.password, 10);
 
     const user = await prismaClient.user.create({
       data: {
         username: data.username,
         password: hashedPass,
-        email: data.name,
+        name: data.name,
       },
     });
 
@@ -59,10 +59,15 @@ app.post("/api/v1/signin", async (req, res) => {
     }
 
     const userFound = await prismaClient.user.findFirst({
-      $where: {
+      where: {
         username: data.username,
       },
     });
+
+    if (!userFound) {
+      res.status(403).json({ message: "User Not found" });
+      return;
+    }
 
     const passwordMatch = bcrypt.compare(data.password, userFound.password);
 
@@ -104,7 +109,7 @@ app.post("/api/v1/create-room", authMiddleware, async (req, res) => {
       return;
     }
 
-    const userId = req.userId;
+    const userId = req.userId as string;
 
     const room = await prismaClient.room.create({
       data: {
@@ -112,10 +117,39 @@ app.post("/api/v1/create-room", authMiddleware, async (req, res) => {
         adminId: userId,
       },
     });
+
+    res.json({
+      roomId: room.id,
+    });
   } catch (err) {
     console.log(err);
     res.status(403).json({
       message: "failed to create room",
+    });
+  }
+});
+
+app.get("/api/v1/chats/:roomId", async (req, res) => {
+  const roomId = Number(req.params.roomId);
+
+  try {
+    const messages = await prismaClient.chat.findMany({
+      where: {
+        roomId: roomId,
+      },
+      orderBy: {
+        id: "desc",
+      },
+      take: 50,
+    });
+
+    res.json({
+      messages,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(403).json({
+      message: "Failed to load messages",
     });
   }
 });
