@@ -12,8 +12,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@repo/backend-common": "workspace:*",
+    "@repo/common": "workspace:*",
+    "@repo/prisma": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.1",
-    "express": "^5.1.0"
+    "@types/jsonwebtoken": "^9.0.9"
   }
 }
