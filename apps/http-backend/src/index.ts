@@ -129,6 +129,7 @@ app.post("/api/v1/create-room", authMiddleware, async (req, res) => {
   }
 });
 
+// TODO - authenticate this route
 app.get("/api/v1/chats/:roomId", async (req, res) => {
   const roomId = Number(req.params.roomId);
 
@@ -145,6 +146,27 @@ app.get("/api/v1/chats/:roomId", async (req, res) => {
 
     res.json({
       messages,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(403).json({
+      message: "Failed to load messages",
+    });
+  }
+});
+
+app.get("/api/v1/room/:slug", async (req, res) => {
+  const slug = req.params.slug;
+
+  try {
+    const room = await prismaClient.room.findFirst({
+      where: {
+        slug,
+      },
+    });
+
+    res.json({
+      room,
     });
   } catch (error) {
     console.log(error);

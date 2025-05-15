@@ -40,7 +40,7 @@ export const Button = ({
   const sizeClass = buttonVariants.variants.size[size];
   return (
     <button
-      className={`${className} ${variantClass} ${sizeClass} bg-amber-500 hover:cursor-pointer`}
+      className={`${className} ${variantClass} ${sizeClass} rounded-md hover:cursor-pointer`}
       onClick={onClick}
     >
       {children}
