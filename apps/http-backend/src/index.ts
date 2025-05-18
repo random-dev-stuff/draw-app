@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 import {
   SignUpSchema,
   SignInSchema,
@@ -11,6 +12,7 @@ import bcrypt from "bcrypt";
 import { prismaClient } from "@repo/db/client";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.post("/api/v1/signup", async (req, res) => {

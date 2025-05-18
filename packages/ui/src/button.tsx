@@ -13,7 +13,7 @@ interface ButtonProps {
 const buttonVariants = {
   variants: {
     variant: {
-      primary: "bg-blue-400 text-primary-foreground hover:bg-primary/90",
+      primary: "bg-primary text-primary-foreground hover:bg-primary/90",
       secondary: "bg-gray-600 text-white hover:bg-gray-700",
       outline: "border border-gray-300 text-gray-800 hover:bg-gray-100",
     },
@@ -40,7 +40,7 @@ export const Button = ({
   const sizeClass = buttonVariants.variants.size[size];
   return (
     <button
-      className={`${className} ${variantClass} ${sizeClass} hover:cursor-pointer border-red rounded-md flex items-center justify-center`}
+      className={`${className} ${variantClass} ${sizeClass} bg-primary text-primary-foreground hover:cursor-pointer border-red rounded-md flex items-center justify-center`}
       onClick={onClick}
     >
       {children}

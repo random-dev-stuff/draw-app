@@ -11,7 +11,7 @@ interface User {
   rooms: string[];
 }
 
-//  improve this, redux or singleton something, better caching 
+//  improve this, redux or singleton something, better caching
 const users: User[] = [];
 
 function checkUser(token: string): string | null {
@@ -84,7 +84,7 @@ wss.on("connection", (ws, request) => {
       // use queue something here to improve this too
       await prismaClient.chat.create({
         data: {
-          roomId,
+          roomId: Number(roomId),
           message,
           userId,
         },

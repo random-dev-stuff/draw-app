@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
-@theme {
-    --primary: #8B5CF6;
-    --primary-foreground: #fff; 
+:root {
+  --primary: 250 90% 67%;
+  --primary-foreground: 0 0% 100%;
+}
+
+@theme inline {
+  --primary: var(--primary);
+  --primary-foreground: var(--primary-foreground);
 }
