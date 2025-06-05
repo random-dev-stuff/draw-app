@@ -26,5 +26,9 @@ export const RoomCanvas = ({ roomId }: { roomId: string }) => {
   if (!socket) {
     return <div>Connecting to Web socket...</div>;
   }
-  return <Canvas roomId={roomId} socket={socket} />;
+  return (
+    <div>
+      <Canvas roomId={roomId} socket={socket} />
+    </div>
+  );
 };

@@ -46,6 +46,9 @@ export async function initDraw(
   let clicked = false;
   let startX = 0;
   let startY = 0;
+  let centerX = 0;
+  let centerY = 0;
+  let radius = 70;
 
   canvas.addEventListener("mousedown", (e) => {
     clicked = true;
