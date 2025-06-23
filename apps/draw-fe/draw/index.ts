@@ -48,7 +48,7 @@ export async function initDraw(
   let startY = 0;
   let centerX = 0;
   let centerY = 0;
-  let radius = 70;
+  let radius = 0;
 
   canvas.addEventListener("mousedown", (e) => {
     clicked = true;
@@ -61,7 +61,8 @@ export async function initDraw(
     const width = e.clientX - startX;
     const height = e.clientY - startY;
     const shape: Shapes = {
-      type: "rect",
+      // @ts-ignore
+      type: window.selectedTool,
       x: startX,
       y: startY,
       width,
@@ -82,8 +83,21 @@ export async function initDraw(
       const width = e.clientX - startX;
       const height = e.clientY - startY;
       clearCanvas(existingShape, canvas, ctx);
-      ctx.strokeStyle = "rgba(255, 255, 255)";
-      ctx.strokeRect(startX, startY, width, height);
+      // @ts-ignore
+      const selectedTool = window.selectedTool;
+      if (selectedTool === "rect") {
+        ctx.strokeStyle = "rgba(255, 255, 255)";
+        ctx.strokeRect(startX, startY, width, height);
+      } else if (selectedTool === "circle") {
+        centerX = startX + width / 2;
+        centerY = startY + height / 2;
+        radius = Math.max(width, height) / 2;
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+      }
     }
   });
 }

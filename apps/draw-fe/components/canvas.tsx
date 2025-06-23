@@ -1,5 +1,5 @@
 import { initDraw } from "@/draw";
-import { useEffect, useRef, useState } from "react";
+import { useDebugValue, useEffect, useRef, useState } from "react";
 import { ToolKit } from "./tool-kit";
 
 export type Shape = "rect" | "pencil" | "circle";
@@ -13,6 +13,11 @@ export const Canvas = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedTool, setSelectedTool] = useState<Shape>("pencil");
+
+  useEffect(() => {
+    // @ts-ignore
+    window.selectedTool = selectedTool;
+  }, [selectedTool]);
 
   useEffect(() => {
     if (!canvasRef.current) {
